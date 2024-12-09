@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const multer = require("multer");
+// const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
 const { error } = require("console");
@@ -13,13 +13,16 @@ app.use(express.json());
 app.use(cors());
 
 // Database Connection with MongoDB
-mongoose.connect(process.env.MONGODB_CONNECT_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 50000,
-  socketTimeoutMS: 45000,
-  family: 4,
-});
+mongoose
+  .connect(process.env.MONGODB_CONNECT_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 50000,
+    socketTimeoutMS: 45000,
+    family: 4,
+  })
+  .then(() => console.log("MongoDB terhubung"))
+  .catch((err) => console.error("Kesalahan koneksi MongoDB:", err));
 
 // API Creation
 app.get("/", (req, res) => {
